@@ -1,0 +1,151 @@
+.mt-control-button {
+  --mt-control-padding-y: 0.45rem;
+  --mt-control-padding-x: 0.8rem;
+  --mt-control-radius: 0.6rem;
+  --mt-control-font-size: 0.82rem;
+  --mt-control-font-weight: 600;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--mt-control-radius);
+  padding: var(--mt-control-padding-y) var(--mt-control-padding-x);
+  background: var(--mt-control-bg, var(--card));
+  color: var(--mt-control-fg, var(--foreground));
+  font-family: inherit;
+  font-size: var(--mt-control-font-size);
+  font-weight: var(--mt-control-font-weight);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    color 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease;
+}
+
+.mt-control-button[data-variant="default"] {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.mt-control-button[data-variant="ghost"] {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+  color: color-mix(in srgb, var(--foreground) 88%, transparent);
+}
+
+.mt-control-button[data-variant="secondary"],
+.mt-control-button[data-variant="outline"] {
+  background: color-mix(in srgb, var(--background) 84%, var(--foreground) 3%);
+  border-color: color-mix(in srgb, var(--foreground) 16%, transparent);
+  color: var(--foreground);
+}
+
+.mt-control-button[data-variant="destructive"] {
+  background: var(--destructive);
+  color: var(--primary-foreground);
+}
+
+.mt-control-button:disabled {
+  opacity: 1;
+  cursor: not-allowed;
+  border-color: color-mix(in srgb, var(--border) 88%, transparent);
+  background: color-mix(in srgb, var(--muted) 88%, var(--card));
+  color: var(--muted-foreground);
+}
+
+.mt-control-pill-option {
+  --mt-control-padding-y: 0.35rem;
+  --mt-control-padding-x: 0.7rem;
+  --mt-control-radius: 999px;
+  --mt-control-font-size: 0.78rem;
+  --mt-control-font-weight: 500;
+
+  border-color: color-mix(in srgb, var(--foreground) 18%, transparent);
+  background: color-mix(in srgb, var(--background) 85%, var(--foreground) 1%);
+  color: var(--foreground);
+}
+
+.mt-control-pill-option.is-selected {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.mt-control-select {
+  width: 11rem;
+  max-width: 100%;
+  border: 1px solid color-mix(in srgb, var(--foreground) 22%, transparent);
+  border-radius: 0.55rem;
+  padding: 0.45rem 0.6rem;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 0.82rem;
+}
+
+.mt-control-switch {
+  --mt-switch-track-width: 2rem;
+  --mt-switch-track-height: 1.125rem;
+  --mt-switch-thumb-size: 1rem;
+  --mt-switch-thumb-inset: 1px;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: var(--mt-switch-track-width);
+  height: var(--mt-switch-track-height);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.mt-control-switch-input {
+  appearance: none;
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: inherit;
+  background: color-mix(in srgb, var(--input) 92%, transparent);
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 150ms ease;
+}
+
+.mt-control-switch-thumb {
+  position: absolute;
+  top: var(--mt-switch-thumb-inset);
+  left: var(--mt-switch-thumb-inset);
+  width: var(--mt-switch-thumb-size);
+  height: var(--mt-switch-thumb-size);
+  border-radius: 50%;
+  background: var(--background);
+  transform: translateX(0);
+  pointer-events: none;
+  transition:
+    transform 150ms ease,
+    background-color 150ms ease;
+}
+
+:host-context(.dark) .mt-control-switch-input {
+  background: color-mix(in srgb, var(--input) 80%, transparent);
+}
+
+:host-context(.dark) .mt-control-switch-thumb {
+  background: var(--foreground);
+}
+
+.mt-control-switch-input:checked {
+  background: var(--primary);
+}
+
+.mt-control-switch-input:checked + .mt-control-switch-thumb {
+  transform: translateX(
+    calc(var(--mt-switch-track-width) - var(--mt-switch-thumb-size) - (var(--mt-switch-thumb-inset) * 2))
+  );
+}
+
+:host-context(.dark) .mt-control-switch-input:checked + .mt-control-switch-thumb {
+  background: var(--primary-foreground);
+}

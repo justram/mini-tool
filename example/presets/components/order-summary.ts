@@ -1,0 +1,32 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyOrderSummaryInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "order-summary-default",
+    items: [
+      {
+        id: "item-1",
+        name: "Premium Coffee Beans",
+        description: "Single origin, medium roast",
+        imageUrl: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=100&h=100&fit=crop",
+        quantity: 2,
+        unitPrice: 24.0,
+      },
+      {
+        id: "item-2",
+        name: "Ceramic Pour-Over Set",
+        description: "Includes dripper and carafe",
+        imageUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=100&h=100&fit=crop",
+        quantity: 1,
+        unitPrice: 45.0,
+      },
+    ],
+    pricing: {
+      subtotal: 93.0,
+      tax: 7.44,
+      shipping: 5.99,
+      total: 106.43,
+      currency: "USD",
+    },
+  };
+}

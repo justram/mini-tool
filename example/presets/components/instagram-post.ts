@@ -1,0 +1,32 @@
+import type { MiniToolUiExampleClonePayload, MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyInstagramPostInitialPayload(
+  element: MiniToolUiExamplePayloadTarget,
+  clonePayload: MiniToolUiExampleClonePayload,
+) {
+  const initialInstagramPostPayload = {
+    id: "ig-post-basic",
+    author: {
+      name: "Alex Rivera",
+      handle: "alexrivera",
+      avatarUrl: "https://images.unsplash.com/photo-1695840358933-16dd7baa6dfb?w=200&h=200&fit=crop",
+      verified: true,
+    },
+    text: "Golden hour in the city. Sometimes you just have to stop and appreciate the view.",
+    media: [
+      {
+        type: "image",
+        url: "https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=800&h=800&fit=crop",
+        alt: "City skyline at golden hour",
+      },
+    ],
+    stats: { likes: 3842 },
+    createdAt: "2025-11-05T18:45:00.000Z",
+  };
+
+  element.payload = clonePayload(initialInstagramPostPayload);
+
+  return {
+    initialInstagramPostPayload,
+  };
+}

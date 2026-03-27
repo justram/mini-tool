@@ -1,0 +1,93 @@
+{
+  "name": "mini-toolui",
+  "version": "0.1.0",
+  "description": "Lit-based mini tool components for host applications.",
+  "keywords": [
+    "lit",
+    "mini-tool",
+    "tool-ui",
+    "ui-components",
+    "web-components"
+  ],
+  "license": "MIT",
+  "style": "dist/styles/entries/mini-tool.css",
+  "files": [
+    "dist",
+    "README.md",
+    "package.json"
+  ],
+  "type": "module",
+  "exports": {
+    "./styles": "./dist/styles/entries/mini-tool.css",
+    "./actions": {
+      "types": "./dist/actions/index.d.ts",
+      "default": "./dist/actions/index.js"
+    },
+    "./components/*": {
+      "types": "./dist/mini-tool/*/index.d.ts",
+      "default": "./dist/mini-tool/*/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "lint": "oxlint -c .oxlintrc.json --deny-warnings src tests scripts benchmarks example playwright.config.ts vitest.config.ts",
+    "lint:fix": "npm run format && oxlint -c .oxlintrc.json --fix --deny-warnings src tests scripts benchmarks example playwright.config.ts vitest.config.ts",
+    "format": "oxfmt -c .oxfmtrc.json .oxfmtrc.json .oxlintrc.json package.json package-lock.json tsconfig.json tsconfig.build.json playwright.config.ts vitest.config.ts src tests scripts benchmarks example/package.json example/package-lock.json example/vite.config.ts example/main.ts example/register-components.ts example/code-snippets.ts example/harness-config.ts example/variant-registry.ts example/runtime example/presets example/styles example/app.css",
+    "format:check": "oxfmt -c .oxfmtrc.json --check .oxfmtrc.json .oxlintrc.json package.json package-lock.json tsconfig.json tsconfig.build.json playwright.config.ts vitest.config.ts src tests scripts benchmarks example/package.json example/package-lock.json example/vite.config.ts example/main.ts example/register-components.ts example/code-snippets.ts example/harness-config.ts example/variant-registry.ts example/runtime example/presets example/styles example/app.css",
+    "check": "npm run lint && npm run format:check && tsc --noEmit && npx tsx scripts/check-architecture-boundaries.ts && npx tsx scripts/check-esm-import-specifiers.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "benchmark": "node benchmarks/run.mjs",
+    "benchmark:source": "npx tsx benchmarks/source-baseline.ts",
+    "benchmark:compare": "node benchmarks/compare-hyperfine.mjs --profile quiet",
+    "benchmark:report": "node benchmarks/overview-latency.mjs && npx tsx scripts/latency-visual-report.ts",
+    "clean": "rm -rf dist build coverage playwright-report test-results .tmp .temp .cache tmp *.tsbuildinfo",
+    "build": "npx tsx scripts/build-package.ts",
+    "package": "npm run build && npx tsx scripts/check-package-readiness.ts",
+    "dev": "npm --prefix example run dev -- --host 127.0.0.1 --port 4173",
+    "dev:build": "npm --prefix example run build",
+    "dev:preview": "npm --prefix example run preview -- --host 127.0.0.1 --port 4173",
+    "tracking:check": "npx tsx scripts/check-verified-readiness.ts",
+    "backlog:archive": "npx tsx scripts/archive-backlog.ts",
+    "visual:compare": "npx tsx scripts/visual-diff-gate.ts",
+    "visual:parity": "npx tsx scripts/visual-parity-workflow.ts",
+    "visual:bisect": "npx tsx scripts/visual-layer-bisect.ts",
+    "quality:gate": "npx tsx scripts/quality-gate.ts",
+    "verify": "npm run check && npm run test && npm run test:e2e"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.40",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "diff": "^8.0.3",
+    "leaflet": "^1.9.4",
+    "lit": "^3.3.1",
+    "lucide": "^0.544.0",
+    "shiki": "^3.14.0",
+    "supercluster": "^8.0.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.54.2",
+    "@tailwindcss/vite": "^4.1.13",
+    "@types/leaflet": "^1.9.21",
+    "@types/node": "^24.5.2",
+    "@types/supercluster": "^7.1.3",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.563.0",
+    "oxfmt": "^0.36.0",
+    "oxlint": "^1.51.0",
+    "pixelmatch": "^7.1.0",
+    "pngjs": "^7.0.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwind-merge": "^3.4.0",
+    "tailwindcss": "^4.1.13",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.7",
+    "vitest": "^3.2.4",
+    "zod": "^4.3.6"
+  }
+}

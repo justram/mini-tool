@@ -1,0 +1,136 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.root {
+  width: 100%;
+}
+
+.shell {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card);
+  box-shadow: 0 1px 2px color-mix(in srgb, var(--foreground) 8%, transparent);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding: 8px 16px;
+  background: var(--card);
+}
+
+.meta {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 4px;
+}
+
+.language {
+  color: var(--muted-foreground);
+  font-size: 14px;
+}
+
+.separator {
+  color: color-mix(in oklab, var(--muted-foreground) 60%, var(--background));
+}
+
+.filename {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--foreground);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.copy:hover,
+.copy:focus-visible {
+  background: color-mix(in oklab, var(--muted) 50%, transparent);
+  color: var(--foreground);
+}
+
+.copy.success {
+  color: var(--chart-1);
+}
+
+.code-scroll {
+  overflow-x: auto;
+  overflow-y: clip;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.code-scroll pre {
+  margin: 0;
+  padding: 16px;
+  background: transparent;
+}
+
+.code-scroll code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.code-scroll.collapsed {
+  max-height: var(--collapse-height);
+}
+
+.line-number {
+  display: inline-block;
+  margin-right: 1.5em;
+  text-align: right;
+  user-select: none;
+  opacity: 0.5;
+}
+
+.fallback {
+  margin: 0;
+  padding: 16px;
+  white-space: pre;
+}
+
+.toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.toggle:hover,
+.toggle:focus-visible {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--muted) 40%, transparent);
+}
+
+.chevron {
+  width: 16px;
+  height: 16px;
+}

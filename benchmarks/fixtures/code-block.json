@@ -1,0 +1,9 @@
+{
+  "id": "code-block-preview-typescript",
+  "code": "import { useState } from \"react\";\n\nexport function Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <button onClick={() => setCount(c => c + 1)}>\n      Count: {count}\n    </button>\n  );\n}",
+  "language": "typescript",
+  "lineNumbers": "visible",
+  "filename": "Counter.tsx",
+  "highlightLines": [4, 7],
+  "maxCollapsedLines": 6
+}

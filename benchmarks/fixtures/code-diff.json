@@ -1,0 +1,9 @@
+{
+  "id": "code-diff-preview-refactor",
+  "language": "typescript",
+  "filename": "lib/auth.ts",
+  "lineNumbers": "visible",
+  "diffStyle": "unified",
+  "oldCode": "export async function fetchUser(id: string) {\n  const res = await db.users.findUnique({ where: { id } });\n  if (!res) throw new Error(\"User not found\");\n  return res;\n}\n",
+  "newCode": "export async function fetchUser(id: string) {\n  const res = await db.users.findUnique({ where: { id } });\n  if (!res) return null;\n  return res;\n}\n"
+}

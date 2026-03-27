@@ -1,0 +1,9 @@
+{
+  "id": "message-draft-email",
+  "channel": "email",
+  "subject": "Q4 Planning Follow-up",
+  "from": "alex@acme.dev",
+  "to": ["sarah@acme.dev"],
+  "cc": ["ops@acme.dev"],
+  "body": "Hi Sarah,\n\nThanks for joining today. I attached the updated timeline and budget notes."
+}

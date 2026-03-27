@@ -1,0 +1,75 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyGeoMapInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "geo-map-fleet",
+    title: "Fleet Positions",
+    description: "Last telemetry update: 30s ago",
+    markers: [
+      {
+        id: "truck-14",
+        lat: 34.0522,
+        lng: -118.2437,
+        label: "Truck 14",
+        description: "Delivery in progress",
+        icon: { type: "emoji", value: "🚚", size: 24 },
+      },
+      {
+        id: "truck-22",
+        lat: 36.1699,
+        lng: -115.1398,
+        label: "Truck 22",
+        description: "Awaiting dispatch",
+        icon: { type: "emoji", value: "🚛", size: 24 },
+      },
+      {
+        id: "truck-31",
+        lat: 32.7157,
+        lng: -117.1611,
+        label: "Truck 31",
+        description: "Returning to hub",
+        icon: {
+          type: "dot",
+          color: "var(--chart-1)",
+          borderColor: "var(--chart-2)",
+          radius: 8,
+        },
+      },
+      {
+        id: "truck-42",
+        lat: 34.041,
+        lng: -118.257,
+        label: "Truck 42",
+        description: "Near downtown stop",
+        icon: { type: "emoji", value: "📦", size: 22 },
+      },
+    ],
+    routes: [
+      {
+        id: "route-west-14",
+        label: "Truck 14 Route",
+        points: [
+          { lat: 33.94, lng: -118.4 },
+          { lat: 34.012, lng: -118.32 },
+          { lat: 34.0522, lng: -118.2437 },
+        ],
+        color: "var(--chart-3)",
+        weight: 4,
+        opacity: 0.8,
+      },
+    ],
+    clustering: {
+      enabled: true,
+      radius: 55,
+      minPoints: 2,
+      maxZoom: 14,
+    },
+    viewport: {
+      mode: "fit",
+      padding: 40,
+      maxZoom: 11,
+      target: "all",
+    },
+    showZoomControl: true,
+  };
+}

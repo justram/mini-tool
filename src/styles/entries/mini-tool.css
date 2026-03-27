@@ -1,0 +1,4 @@
+@import "../themes/default.css";
+@import "../theme/transition.css";
+@source "../../mini-tool/**/*.ts";
+@import "tailwindcss";

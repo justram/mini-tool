@@ -1,0 +1,26 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyChartInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "chart-revenue",
+    type: "bar",
+    title: "Monthly Revenue",
+    description: "Revenue vs Expenses (2024)",
+    data: [
+      { month: "Jan", revenue: 4000, expenses: 2400 },
+      { month: "Feb", revenue: 3000, expenses: 1398 },
+      { month: "Mar", revenue: 5000, expenses: 3200 },
+      { month: "Apr", revenue: 2780, expenses: 3908 },
+      { month: "May", revenue: 1890, expenses: 4800 },
+      { month: "Jun", revenue: 2390, expenses: 3800 },
+    ],
+    xKey: "month",
+    series: [
+      { key: "revenue", label: "Revenue" },
+      { key: "expenses", label: "Expenses" },
+    ],
+    colors: ["#14B8A6", "#F87171"],
+    showLegend: true,
+    showGrid: true,
+  };
+}

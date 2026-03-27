@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+coverage/
+dist/
+build/
+*.tsbuildinfo
+
+# Test artifacts
+playwright-report/
+test-results/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editors / IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Temp / cache
+.tmp/
+.temp/
+tmp/
+.cache/
+
+# Local maintainer notes and non-source investigation artifacts
+/scratch/
+/migration/
+
+# Benchmark source stays tracked.
+# Generated benchmark outputs are ignored via benchmarks/results/.gitignore.

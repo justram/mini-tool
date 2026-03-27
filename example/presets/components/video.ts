@@ -1,0 +1,21 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyVideoInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "video-preview-poster",
+    assetId: "video-poster",
+    src: "https://archive.org/download/NatureStockVideo/IMG_9500_.mp4",
+    poster: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=900&auto=format&fit=crop",
+    title: "Forest Canopy",
+    description: "Sunlight filtering through the trees.",
+    ratio: "16:9",
+    fit: "cover",
+    durationMs: 8000,
+    createdAt: "2025-01-15T08:00:00.000Z",
+    source: {
+      label: "Archive.org",
+      iconUrl: "https://api.dicebear.com/7.x/shapes/svg?seed=archive",
+      url: "https://archive.org/details/NatureStockVideo",
+    },
+  };
+}

@@ -1,0 +1,188 @@
+:host {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: var(--foreground);
+  font-family: var(--mt-font-family-emphasis, Inter, var(--mt-font-family, ui-sans-serif, system-ui, sans-serif));
+}
+
+.root {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card);
+  color: var(--card-foreground);
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 600;
+}
+
+.description {
+  margin: 4px 0 0;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.checkmark {
+  color: var(--chart-1);
+  font-size: 16px;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.summary {
+  display: grid;
+  gap: 8px;
+  border-radius: 12px;
+  padding: 12px;
+  background: color-mix(in oklab, var(--muted) 80%, transparent);
+}
+
+.progress-label {
+  color: var(--muted-foreground);
+  font-size: 12px;
+}
+
+.progress-track {
+  height: 6px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: color-mix(in oklab, var(--muted) 92%, var(--background));
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 220ms ease;
+}
+
+.progress-fill.complete {
+  background: linear-gradient(90deg, color-mix(in oklab, var(--chart-1) 72%, var(--primary)), var(--chart-1));
+}
+
+.todo-list,
+.hidden-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.todo {
+  border-radius: 10px;
+}
+
+.todo-row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 10px;
+  text-align: left;
+  border-radius: 10px;
+}
+
+.todo-row.has-description {
+  cursor: pointer;
+}
+
+.todo-row.has-description:hover {
+  background: color-mix(in oklab, var(--muted) 75%, transparent);
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+}
+
+.icon.in_progress {
+  color: var(--primary);
+}
+
+.icon.completed {
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.icon.cancelled {
+  border-color: var(--destructive);
+  background: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.todo-label {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.todo-label.pending {
+  color: var(--muted-foreground);
+}
+
+.chevron {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.todo-description {
+  margin: 0;
+  padding: 0 8px 8px 38px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.more-toggle {
+  width: auto;
+  border: 0;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.more-toggle:hover {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+}
+
+.compact .summary,
+.compact .header {
+  display: none;
+}

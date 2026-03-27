@@ -1,0 +1,177 @@
+:host {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --muted-bg: var(--muted);
+  --border-color: var(--border);
+
+  display: block;
+  width: 100%;
+  color: var(--card-fg);
+  font-family: var(--mt-font-family, ui-sans-serif, system-ui, sans-serif);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.card {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  border-radius: 0.85rem;
+  background: var(--card-bg);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+.card.receipt {
+  background: color-mix(in oklab, var(--card-bg) 80%, var(--muted-bg));
+}
+
+.content {
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.header {
+  display: grid;
+  gap: 0.2rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.receipt-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--chart-1) 26%, var(--card-bg));
+  color: color-mix(in oklab, var(--chart-1) 78%, var(--foreground));
+  display: grid;
+  place-items: center;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.receipt-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted-fg);
+}
+
+.items {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.item-row {
+  display: flex;
+  gap: 0.7rem;
+}
+
+.item-image {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.45rem;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.item-image.placeholder {
+  background: var(--muted-bg);
+  display: grid;
+  place-items: center;
+  font-size: 1.1rem;
+}
+
+.item-content {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.item-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.item-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-total {
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.item-subtitle {
+  font-size: 0.84rem;
+  color: var(--muted-fg);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.separator {
+  border-top: 1px solid color-mix(in oklab, var(--border-color) 85%, var(--background));
+}
+
+.pricing {
+  margin: 0;
+  display: grid;
+  gap: 0.45rem;
+  font-size: 0.88rem;
+}
+
+.pricing-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.pricing-row dd,
+.pricing-row dt {
+  margin: 0;
+}
+
+.pricing-row dd {
+  font-variant-numeric: tabular-nums;
+}
+
+.pricing-row.total dt {
+  font-weight: 600;
+}
+
+.pricing-row.total dd {
+  font-weight: 600;
+}
+
+.pricing-row.positive {
+  color: var(--chart-1);
+}
+
+.muted {
+  color: var(--muted-fg);
+}
+
+.error-message {
+  margin: 0.35rem 0 0;
+  color: var(--muted-fg);
+  font-size: 0.9rem;
+}

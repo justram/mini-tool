@@ -1,0 +1,184 @@
+:host {
+  --card-bg: color-mix(in oklab, var(--card) 96%, var(--background));
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --border-color: var(--border);
+
+  display: block;
+  width: 100%;
+  min-width: 0;
+  color: var(--card-fg);
+  font-family: var(--mt-font-family-emphasis, Inter, var(--mt-font-family, ui-sans-serif, system-ui, sans-serif));
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: 1.6rem;
+  padding: 1.15rem 1.2rem;
+  background: var(--card-bg);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 10%, transparent);
+  display: grid;
+  gap: 0.9rem;
+}
+
+.timer {
+  font-size: 0.74rem;
+  color: var(--muted-fg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  display: inline-flex;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.timer-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+  stroke: currentColor;
+  opacity: 0.9;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.7rem;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.58rem 0.72rem;
+  border-radius: 1rem;
+}
+
+.step.has-description {
+  align-items: start;
+}
+
+.step.current {
+  background: color-mix(in oklab, var(--muted) 90%, var(--background));
+}
+
+.step.has-connector::after {
+  content: "";
+  position: absolute;
+  left: calc(0.72rem + 0.925rem);
+  top: calc(0.58rem + 0.925rem);
+  width: 1px;
+  height: calc(100% + 0.65rem);
+  background: color-mix(in oklab, var(--border-color) 96%, var(--background));
+}
+
+.marker {
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  border: 2px solid color-mix(in oklab, var(--border-color) 95%, var(--background));
+  background: var(--card);
+  z-index: var(--mt-layer-content);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.marker.pending {
+  border-color: color-mix(in oklab, var(--border-color) 95%, var(--background));
+  color: transparent;
+  background: color-mix(in oklab, var(--muted) 80%, var(--background));
+}
+
+.marker.completed {
+  border-color: var(--foreground);
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 1.1rem;
+}
+
+.marker.failed {
+  border-color: var(--destructive);
+  background: var(--destructive);
+  color: var(--destructive-foreground);
+}
+
+.marker.in-progress {
+  border-color: color-mix(in oklab, var(--border-color) 96%, var(--background));
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.spinner {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 999px;
+  border: 2px solid transparent;
+  border-top-color: var(--foreground);
+  border-right-color: var(--foreground);
+  animation: spin 850ms linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+
+.label.pending {
+  color: var(--muted-foreground);
+  font-weight: 560;
+}
+
+.description {
+  margin-top: 0.26rem;
+  font-size: 0.74rem;
+  color: var(--muted-fg);
+  line-height: 1.35;
+}
+
+.receipt-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.receipt-summary {
+  font-size: 0.76rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.tone-success {
+  color: var(--chart-1);
+}
+
+.tone-warn {
+  color: var(--chart-5);
+}
+
+.tone-failed {
+  color: var(--destructive);
+}
+
+.tone-muted {
+  color: var(--muted-foreground);
+}

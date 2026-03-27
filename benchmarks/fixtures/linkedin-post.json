@@ -1,0 +1,14 @@
+{
+  "id": "li-post-basic",
+  "author": {
+    "name": "Dr. Sarah Chen",
+    "avatarUrl": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&h=200&fit=crop",
+    "headline": "VP of Engineering at TechCorp | Building the future of AI"
+  },
+  "text": "Excited to share that our team just shipped a major update to our ML pipeline. Six months of hard work and one incredible team.",
+  "stats": {
+    "likes": 847,
+    "isLiked": true
+  },
+  "createdAt": "2025-11-05T09:15:00.000Z"
+}

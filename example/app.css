@@ -1,0 +1,525 @@
+@import "mini-toolui/styles";
+@import "./styles/theme-toggle.css";
+
+:root {
+  --example-shell-width: 94rem;
+  --example-sidebar-width: clamp(18rem, 20vw, 21.5rem);
+  --example-content-width: 74rem;
+  --example-pane-gap: 1.5rem;
+  --example-pane-padding: 1.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  padding: 1.5rem;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.fixture-toolbar {
+  position: sticky;
+  top: 0.75rem;
+  z-index: var(--mt-layer-control);
+  margin-inline: auto;
+  margin-bottom: 1.5rem;
+  display: flex;
+  width: min(100%, var(--example-shell-width));
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mobile-jump {
+  display: none;
+  min-width: 0;
+  margin-right: auto;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.mobile-jump__label {
+  color: color-mix(in oklab, var(--foreground) 70%, var(--background));
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.mobile-jump__select {
+  min-width: 0;
+  width: min(100%, 18rem);
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 0.625rem;
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  color: var(--foreground);
+  font: inherit;
+  padding: 0.5rem 0.75rem;
+}
+
+.layout-toggle {
+  display: inline-flex;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 0.625rem;
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+}
+
+.layout-button {
+  border: 0;
+  border-inline-end: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  background: transparent;
+  color: color-mix(in oklab, var(--foreground) 82%, var(--background));
+  padding: 0.4375rem 0.75rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.layout-button:last-child {
+  border-inline-end: 0;
+}
+
+.layout-button[aria-pressed="true"] {
+  background: color-mix(in oklab, var(--muted) 48%, var(--card));
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.app-shell {
+  margin-inline: auto;
+  display: grid;
+  width: min(100%, var(--example-shell-width));
+  align-items: start;
+  gap: var(--example-pane-gap);
+}
+
+.component-sidebar,
+.content-shell {
+  min-width: 0;
+}
+
+.component-sidebar__inner {
+  display: grid;
+  gap: 1rem;
+  padding-inline-end: 0.5rem;
+}
+
+.component-sidebar__eyebrow,
+.component-sidebar__description,
+.component-sidebar__count,
+.card-subtitle,
+.component-sidebar__group-title,
+.app-intro__eyebrow,
+.app-intro__meta-copy {
+  margin: 0;
+  color: color-mix(in oklab, var(--foreground) 68%, var(--background));
+}
+
+.component-sidebar__eyebrow,
+.app-intro__eyebrow,
+.component-sidebar__group-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.component-sidebar__title,
+.card-title,
+.app-intro__title {
+  margin: 0;
+  color: var(--foreground);
+}
+
+.component-sidebar__title {
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.component-sidebar__description,
+.component-sidebar__count,
+.card-subtitle,
+.app-intro__description,
+.app-intro__meta-copy {
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.component-sidebar__search {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.component-sidebar__search-label {
+  color: color-mix(in oklab, var(--foreground) 68%, var(--background));
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.component-sidebar__search-input {
+  width: 100%;
+  border: 1px solid color-mix(in oklab, var(--border) 82%, transparent);
+  border-radius: 0.625rem;
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  color: var(--foreground);
+  font: inherit;
+  padding: 0.625rem 0.75rem;
+}
+
+.component-sidebar__search-input::placeholder {
+  color: color-mix(in oklab, var(--foreground) 56%, var(--background));
+}
+
+.component-sidebar__search-input:focus-visible,
+.mobile-jump__select:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--foreground) 40%, transparent);
+  outline-offset: 2px;
+}
+
+.component-sidebar__nav {
+  display: grid;
+  gap: 1rem;
+}
+
+.component-sidebar__group {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.component-sidebar__group[hidden],
+.component-sidebar__item[hidden] {
+  display: none;
+}
+
+.component-sidebar__group-list {
+  display: grid;
+}
+
+.component-sidebar__item {
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 42%, transparent);
+}
+
+.component-sidebar__item:last-child {
+  border-bottom: 0;
+}
+
+.component-sidebar__item-title {
+  display: block;
+  border-radius: 0.625rem;
+  padding: 0.45rem 0.625rem;
+  color: color-mix(in oklab, var(--foreground) 88%, var(--background));
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.component-sidebar__item-title.is-active {
+  background: color-mix(in oklab, var(--muted) 72%, var(--card));
+  color: var(--foreground);
+  font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--foreground);
+}
+
+.component-sidebar__item-title:hover,
+.component-sidebar__item-title:focus-visible,
+.reset-button:hover,
+.reset-button:focus-visible,
+.layout-button:hover,
+.layout-button:focus-visible,
+.card-tab:hover,
+.card-tab:focus-visible {
+  background: color-mix(in oklab, var(--muted) 58%, var(--card));
+  color: var(--foreground);
+  outline: none;
+}
+
+.content-shell {
+  min-width: 0;
+  max-width: min(100%, var(--example-content-width));
+}
+
+.app-intro {
+  margin-bottom: 1.75rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.app-intro__header {
+  display: grid;
+  gap: 1rem;
+  align-items: start;
+}
+
+.app-intro__copy {
+  display: grid;
+  gap: 0.875rem;
+}
+
+.app-intro__title {
+  max-width: 16ch;
+  font-size: clamp(2rem, 2.6vw, 2.75rem);
+  line-height: 1.08;
+  letter-spacing: -0.03em;
+}
+
+.app-intro__description {
+  margin: 0;
+  max-width: 56ch;
+  color: color-mix(in oklab, var(--foreground) 76%, var(--background));
+}
+
+.app-intro__meta {
+  display: grid;
+  gap: 0.375rem;
+  border-left: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+  padding-left: 1rem;
+}
+
+.app-intro__stat {
+  margin: 0;
+  color: var(--foreground);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.stack {
+  display: grid;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.card {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.875rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--border) 74%, transparent);
+  border-radius: 1rem;
+  padding: 1rem 1rem 1.375rem;
+  background: color-mix(in oklab, var(--card) 86%, transparent);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+  scroll-margin-top: 1.25rem;
+}
+
+body.layout-constrained .card {
+  width: min(100%, 40rem);
+}
+
+body.layout-fluid .card {
+  width: 100%;
+}
+
+.card-header,
+.card-controls,
+.card-view-tabs,
+.card-preview,
+.card-code-view,
+.receipt {
+  width: 100%;
+}
+
+.card-header {
+  display: grid;
+  gap: 0.25rem;
+  padding-inline: 0.125rem;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  line-height: 1.3;
+}
+
+.card-controls {
+  margin-top: 0.25rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.reset-button {
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  border-radius: 0.625rem;
+  background: color-mix(in oklab, var(--card) 92%, transparent);
+  color: var(--foreground);
+  font-size: 0.8125rem;
+  line-height: 1;
+  padding: 0.4375rem 0.6875rem;
+  cursor: pointer;
+}
+
+.receipt {
+  margin-top: 0.5rem;
+  color: color-mix(in oklab, var(--foreground) 70%, var(--background));
+}
+
+.card-view-tabs {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.25rem;
+  border-bottom: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  padding-inline: 0.125rem;
+}
+
+.card-tab {
+  border: 0;
+  border-radius: 0.625rem 0.625rem 0 0;
+  background: transparent;
+  color: color-mix(in oklab, var(--foreground) 70%, var(--background));
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  padding: 0.5625rem 0.75rem;
+  cursor: pointer;
+}
+
+.card-tab[data-active="true"] {
+  color: var(--foreground);
+  box-shadow: inset 0 -2px 0 var(--foreground);
+}
+
+.card-tab[data-view="code"][data-active="true"] {
+  box-shadow: inset 0 -2px 0 transparent;
+  border: 1px solid color-mix(in oklab, var(--border) 80%, transparent);
+  border-bottom-color: transparent;
+  background: color-mix(in oklab, var(--card) 94%, transparent);
+}
+
+.card-preview {
+  display: flex;
+  justify-content: center;
+}
+
+.card-code-view {
+  padding-inline: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.card-code-renderer {
+  display: block;
+  margin: 0;
+  max-height: 34rem;
+  overflow: auto;
+}
+
+@media (min-width: 56rem) {
+  html,
+  body {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  body {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    gap: 0;
+  }
+
+  .fixture-toolbar {
+    margin-bottom: 0;
+  }
+
+  .app-shell {
+    grid-template-columns: var(--example-sidebar-width) minmax(0, 1fr);
+    min-height: 0;
+    height: 100%;
+    padding-top: 1.5rem;
+    overflow: hidden;
+  }
+
+  .component-sidebar,
+  .content-shell {
+    height: 100%;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .content-shell {
+    scrollbar-gutter: stable;
+  }
+
+  .component-sidebar {
+    padding-right: 0.5rem;
+  }
+
+  .component-sidebar__group-title {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    padding-block: 0.25rem;
+    background: var(--background);
+  }
+
+  .content-shell {
+    padding-right: 0.25rem;
+    scroll-behavior: smooth;
+  }
+
+  .app-intro__header {
+    grid-template-columns: minmax(0, 1fr) minmax(14rem, 17rem);
+  }
+}
+
+@media (max-width: 55.999rem) {
+  body {
+    padding: 1rem;
+  }
+
+  .fixture-toolbar {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+
+  .mobile-jump {
+    display: inline-flex;
+    width: 100%;
+  }
+
+  .mobile-jump__select {
+    width: 100%;
+  }
+
+  .component-sidebar__inner {
+    gap: 0.875rem;
+    padding-inline-end: 0;
+  }
+
+  .component-sidebar__group-title {
+    position: static;
+    padding-block: 0;
+    background: transparent;
+  }
+
+  .component-sidebar__nav {
+    grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+    gap: 0.75rem;
+  }
+
+  .component-sidebar__group {
+    gap: 0.5rem;
+  }
+
+  .component-sidebar__item {
+    border-bottom: 0;
+  }
+
+  .component-sidebar__group-list {
+    gap: 0.25rem;
+  }
+
+  .app-intro__meta {
+    border-left: 0;
+    border-top: 1px solid color-mix(in oklab, var(--border) 70%, transparent);
+    padding-top: 0.875rem;
+    padding-left: 0;
+  }
+}

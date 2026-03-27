@@ -1,0 +1,98 @@
+@import "../../shared/css-fragments/control-primitives.css";
+
+:host {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --border-color: var(--border);
+  --accent-soft: var(--accent);
+  --accent-fg: var(--accent-foreground);
+  --accent-strong: var(--ring);
+
+  display: block;
+  width: 100%;
+  color: var(--card-fg);
+  font-family: var(--mt-font-family, ui-sans-serif, system-ui, sans-serif);
+}
+
+.root {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  background: var(--card-bg);
+  display: grid;
+  gap: 0.75rem;
+}
+
+.options {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.option {
+  width: 100%;
+  text-align: left;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--card-fg);
+  border-radius: 0.5rem;
+  padding: 0.625rem 0.75rem;
+  cursor: pointer;
+  display: grid;
+  gap: 0.2rem;
+  font-family: inherit;
+  font-size: 0.95rem;
+}
+
+.option[aria-selected="true"] {
+  border-color: var(--accent-strong);
+  background: var(--accent-soft);
+  color: var(--accent-fg);
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 2px;
+}
+
+.option[disabled] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.description {
+  color: var(--muted-fg);
+  font-size: 0.85rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.action {
+  --mt-control-padding-y: 0.4rem;
+  --mt-control-padding-x: 0.75rem;
+  --mt-control-radius: 0.5rem;
+
+  border-color: var(--border-color);
+  background: var(--card-bg);
+  color: var(--card-fg);
+}
+
+.action[data-variant="ghost"] {
+  border-color: var(--border-color);
+  color: var(--card-fg);
+}
+
+.receipt {
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  display: grid;
+  gap: 0.4rem;
+  background: var(--card-bg);
+}

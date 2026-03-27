@@ -1,0 +1,284 @@
+:host {
+  display: block;
+  width: 100%;
+  color: var(--foreground);
+  font-family: var(--mt-font-family-emphasis, Inter, var(--mt-font-family, ui-sans-serif, system-ui, sans-serif));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.root {
+  display: grid;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.surface {
+  display: grid;
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--foreground) 8%, transparent);
+  border-radius: 1rem;
+  background: var(--card);
+  padding: 0.75rem 1.25rem;
+  overflow: hidden;
+}
+
+.slider-row {
+  width: 100%;
+  padding: 0.5rem 0;
+}
+
+.slider-row:nth-child(1) {
+  --slider-fill-light: oklab(0.714993 -0.116823 -0.0824538 / 0.4);
+  --slider-handle-light: oklab(0.904 -0.076 -0.049 / 0.52);
+  --slider-fill-dark: oklab(0.714993 -0.116823 -0.0824538 / 0.4);
+  --slider-handle-dark: oklab(0.904 -0.076 -0.049 / 0.52);
+}
+
+.slider-row:nth-child(2) {
+  --slider-fill-light: oklab(0.666998 0.23291 -0.180983 / 0.4);
+  --slider-handle-light: oklab(0.775 0.154 -0.103 / 0.5);
+  --slider-fill-dark: oklab(0.666998 0.23291 -0.180983 / 0.4);
+  --slider-handle-dark: oklab(0.775 0.154 -0.103 / 0.5);
+}
+
+.slider-row:nth-child(3) {
+  --slider-fill-light: oklab(0.769006 0.0640422 0.176756 / 0.4);
+  --slider-handle-light: oklab(0.848 0.032 0.142 / 0.52);
+  --slider-fill-dark: oklab(0.769006 0.0640422 0.176756 / 0.4);
+  --slider-handle-dark: oklab(0.848 0.032 0.142 / 0.52);
+}
+
+.track-shell {
+  position: relative;
+  height: 3rem;
+  border-radius: var(--radius-sm, 0.375rem);
+  border: 1px solid color-mix(in srgb, var(--foreground) 10%, transparent);
+  background: color-mix(in srgb, var(--card) 95%, var(--foreground) 2%);
+  overflow: hidden;
+}
+
+.text-overlay {
+  pointer-events: none;
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  top: calc(50% - 0.5px);
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: var(--mt-layer-chrome);
+}
+
+.label {
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.value {
+  color: var(--foreground);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0;
+}
+
+.track-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 0;
+  background: var(--slider-fill-light, color-mix(in srgb, var(--foreground) 8%, var(--card)));
+  z-index: var(--mt-layer-control);
+  transition:
+    left 90ms cubic-bezier(0.22, 1, 0.36, 1),
+    right 90ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.value-marker {
+  position: absolute;
+  bottom: 1px;
+  width: 1px;
+  height: 8px;
+  transform: translateX(-50%);
+  background: var(--slider-handle-light, color-mix(in srgb, var(--foreground) 24%, transparent));
+  border-radius: 999px;
+  z-index: var(--mt-layer-chrome);
+  transition:
+    width 120ms ease,
+    height 120ms ease;
+}
+
+.track-shell.is-interacting .value-marker {
+  width: 2px;
+  height: 12px;
+}
+
+.track-shell.is-dragging .value-marker {
+  width: 3px;
+  height: 16px;
+}
+
+.tick-rail {
+  pointer-events: none;
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  bottom: 1px;
+  height: 0.5rem;
+  z-index: var(--mt-layer-chrome);
+}
+
+.tick {
+  position: absolute;
+  transform: translateX(-50%);
+  width: 1px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--foreground) 15%, transparent);
+}
+
+.tick.major {
+  height: 0.5rem;
+}
+
+.tick.minor {
+  height: 0.375rem;
+  opacity: 0.7;
+}
+
+.tick.edge {
+  background: transparent;
+}
+
+.slider-input {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  appearance: none;
+  cursor: pointer;
+  opacity: 0;
+  z-index: var(--mt-layer-interaction-capture);
+}
+
+.slider-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.slider-input::-webkit-slider-runnable-track {
+  appearance: none;
+  background: transparent;
+}
+
+.slider-input::-moz-range-track {
+  background: transparent;
+  border: 0;
+}
+
+.slider-input::-webkit-slider-thumb {
+  appearance: none;
+  width: 0;
+  height: 0;
+  border: 0;
+  background: transparent;
+}
+
+.slider-input::-moz-range-thumb {
+  width: 0;
+  height: 0;
+  border: 0;
+  background: transparent;
+}
+
+.track-shell:has(.slider-input:focus-visible) {
+  outline: 2px solid color-mix(in srgb, var(--primary) 60%, transparent);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.actions.align-left {
+  justify-content: flex-start;
+}
+
+.actions.align-center {
+  justify-content: center;
+}
+
+.actions.align-right {
+  justify-content: flex-end;
+}
+
+.action {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.action.variant-default,
+.action.variant-secondary,
+.action.variant-outline,
+.action.variant-destructive {
+  border-color: color-mix(in srgb, var(--foreground) 26%, transparent);
+  font-family: inherit;
+}
+
+.action.variant-default {
+  background: color-mix(in srgb, var(--foreground) 92%, transparent);
+  color: var(--background);
+}
+
+.action.variant-ghost {
+  border-color: transparent;
+  background: transparent;
+  font-family: inherit;
+}
+
+.action:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+:host-context(.dark) .surface {
+  border-color: color-mix(in oklab, var(--foreground) 12%, transparent);
+  background: color-mix(in oklab, var(--background) 92%, var(--foreground) 8%);
+}
+
+:host-context(.dark) .track-shell {
+  border-color: color-mix(in oklab, var(--foreground) 18%, transparent);
+  background: color-mix(in oklab, var(--background) 84%, var(--foreground) 16%);
+}
+
+:host-context(.dark) .tick {
+  background: color-mix(in oklab, var(--foreground) 16%, transparent);
+}
+
+:host-context(.dark) .tick.edge {
+  background: transparent;
+}
+
+:host-context(.dark) .track-fill {
+  background: var(--slider-fill-dark, var(--slider-fill-light));
+}
+
+:host-context(.dark) .value-marker {
+  background: var(--slider-handle-dark, var(--slider-handle-light));
+}

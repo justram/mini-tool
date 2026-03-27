@@ -1,0 +1,11 @@
+{
+  "env": {
+    "builtin": true
+  },
+  "rules": {
+    "no-control-regex": "off",
+    "no-unused-vars": "off",
+    "no-useless-fallback-in-spread": "off"
+  },
+  "ignorePatterns": []
+}

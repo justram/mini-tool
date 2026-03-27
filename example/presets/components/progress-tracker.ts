@@ -1,0 +1,28 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyProgressTrackerInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "progress-tracker-in-progress",
+    steps: [
+      {
+        id: "build",
+        label: "Building",
+        description: "Compiling TypeScript and bundling assets",
+        status: "completed",
+      },
+      {
+        id: "test",
+        label: "Running Tests",
+        description: "147 tests across 23 suites",
+        status: "in-progress",
+      },
+      {
+        id: "deploy",
+        label: "Deploy to Production",
+        description: "Upload to edge nodes",
+        status: "pending",
+      },
+    ],
+    elapsedTime: 43200,
+  };
+}

@@ -1,0 +1,209 @@
+:host {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --border-color: var(--border);
+  --primary-bg: var(--primary);
+  --primary-fg: var(--primary-foreground);
+  --ring-color: var(--ring);
+
+  display: block;
+  width: 100%;
+  color: var(--card-fg);
+  font-family: var(--mt-font-family, ui-sans-serif, system-ui, sans-serif);
+}
+
+.container {
+  display: grid;
+  width: 100%;
+  gap: 0.75rem;
+  outline: none;
+}
+
+.container:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring-color) 75%, var(--background));
+  outline-offset: 4px;
+  border-radius: 0.95rem;
+}
+
+.card {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  padding: 0.8rem 1rem 1rem;
+  background: var(--card-bg);
+  display: grid;
+  gap: 0.7rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.meta-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.meta-row {
+  font-size: 0.9rem;
+}
+
+.meta-label {
+  color: var(--muted-fg);
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+  padding: 0 0.75rem 0.25rem 0;
+  vertical-align: top;
+  font-weight: 500;
+}
+
+.meta-value {
+  padding-bottom: 0.25rem;
+  vertical-align: top;
+}
+
+.meta-value.muted {
+  color: var(--muted-fg);
+}
+
+.separator {
+  margin: 0 -1rem;
+  border: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.content-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.member-count {
+  margin-left: auto;
+  color: var(--muted-fg);
+  font-weight: 400;
+}
+
+.body-wrap {
+  position: relative;
+}
+
+.body-content {
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  transition: max-height 220ms ease;
+}
+
+.body-text {
+  margin: 0;
+  padding-top: 0.25rem;
+  white-space: pre-wrap;
+}
+
+.body-fade {
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3rem;
+  background: linear-gradient(to top, var(--card-bg), transparent);
+}
+
+.expand-button {
+  justify-self: start;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-fg);
+  border-radius: 0.5rem;
+  padding: 0.2rem 0.45rem;
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.expand-button:hover {
+  color: var(--card-fg);
+  font-family: inherit;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.action {
+  border-radius: 999px;
+  border: 1px solid var(--border-color);
+  background: var(--card-bg);
+  color: var(--card-fg);
+  padding: 0.45rem 0.85rem;
+  font-size: 0.84rem;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.action:focus-visible,
+.expand-button:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--ring-color) 75%, var(--background));
+  outline-offset: 2px;
+  font-family: inherit;
+}
+
+.action.action-primary {
+  border-color: var(--primary-bg);
+  background: var(--primary-bg);
+  color: var(--primary-fg);
+  font-family: inherit;
+}
+
+.sending-label {
+  color: var(--muted-fg);
+  font-size: 0.85rem;
+}
+
+.receipt {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+}
+
+.receipt-time {
+  color: var(--muted-fg);
+}
+
+.receipt-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--chart-1) 78%, var(--foreground));
+  background: color-mix(in oklab, var(--chart-1) 26%, var(--card-bg));
+}
+
+.receipt-icon-cancelled {
+  color: var(--muted-fg);
+  background: color-mix(in oklab, var(--muted-fg) 12%, var(--card-bg));
+}
+
+.slack-logo {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}

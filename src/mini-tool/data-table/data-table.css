@@ -1,0 +1,261 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.root {
+  width: 100%;
+  color: var(--foreground);
+  font-size: 14px;
+  padding-block: 1px;
+}
+
+.table-wrap {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: auto;
+  background: var(--card);
+  max-height: var(--max-height, none);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 600px;
+}
+
+thead {
+  background: color-mix(in srgb, var(--muted) 45%, transparent);
+}
+
+th,
+td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+td {
+  white-space: nowrap;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+th {
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th.align-right,
+.cell.align-right {
+  text-align: right;
+}
+
+th.align-center,
+.cell.align-center {
+  text-align: center;
+}
+
+.column-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: inherit;
+  cursor: pointer;
+}
+
+.column-button:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.column-button:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.sort-indicator.none {
+  opacity: 0.25;
+}
+
+.sort-indicator.asc,
+.sort-indicator.desc {
+  opacity: 1;
+}
+
+.cell.truncate {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.empty,
+.mobile-empty {
+  text-align: center;
+  color: var(--muted-foreground);
+  padding: 20px;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--border) 85%, transparent);
+  padding: 2px 8px;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.tone-neutral {
+  background: color-mix(in srgb, var(--muted) 60%, transparent);
+  color: var(--foreground);
+}
+
+.tone-success {
+  background: color-mix(in srgb, var(--chart-3) 16%, transparent);
+  color: var(--foreground);
+}
+
+.tone-warning {
+  background: color-mix(in srgb, var(--chart-5) 16%, transparent);
+  color: var(--foreground);
+}
+
+.tone-danger {
+  background: color-mix(in srgb, var(--destructive) 16%, transparent);
+  color: var(--destructive);
+}
+
+.tone-info {
+  background: color-mix(in srgb, var(--chart-1) 16%, transparent);
+  color: var(--foreground);
+}
+
+.link {
+  color: var(--accent-foreground);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.array-list {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.array-pill {
+  border-radius: 6px;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  padding: 2px 6px;
+  font-size: 12px;
+}
+
+.array-more,
+.muted {
+  color: var(--muted-foreground);
+}
+
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.delta-good {
+  color: var(--chart-3);
+}
+
+.delta-bad {
+  color: var(--destructive);
+}
+
+.delta-neutral {
+  color: var(--muted-foreground);
+}
+
+.mobile-list {
+  display: none;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--card);
+}
+
+.mobile-card {
+  border-top: 1px solid var(--border);
+}
+
+.mobile-card:first-child {
+  border-top: none;
+}
+
+.mobile-card summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 12px;
+}
+
+.mobile-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.mobile-heading {
+  font-weight: 600;
+}
+
+.mobile-summary {
+  margin-top: 6px;
+  display: grid;
+  gap: 4px;
+  color: var(--muted-foreground);
+  font-size: 13px;
+}
+
+.mobile-details {
+  margin: 0;
+  padding: 0 12px 12px;
+  display: grid;
+  gap: 8px;
+}
+
+.mobile-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.mobile-row dt {
+  margin: 0;
+  color: var(--muted-foreground);
+}
+
+.mobile-row dd {
+  margin: 0;
+  text-align: right;
+}
+
+@media (max-width: 720px) {
+  .table-wrap {
+    display: none;
+  }
+
+  .mobile-list {
+    display: block;
+  }
+}

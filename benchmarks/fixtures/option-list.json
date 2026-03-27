@@ -1,0 +1,9 @@
+{
+  "id": "option-list-size",
+  "options": [
+    { "id": "small", "label": "Small" },
+    { "id": "medium", "label": "Medium" },
+    { "id": "large", "label": "Large" }
+  ],
+  "selectionMode": "multi"
+}

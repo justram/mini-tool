@@ -1,0 +1,29 @@
+{
+  "id": "stats-display-business-metrics",
+  "title": "Q4 Performance",
+  "description": "October through December 2024",
+  "stats": [
+    {
+      "key": "revenue",
+      "label": "Revenue",
+      "value": 847300,
+      "format": { "kind": "currency", "currency": "USD", "decimals": 0 },
+      "sparkline": {
+        "data": [72000, 68000, 74000, 81000, 78000, 85000, 89000, 91000, 86000, 94000, 97000, 102000],
+        "color": "#2563eb"
+      },
+      "diff": { "value": 12.4, "decimals": 1 }
+    },
+    {
+      "key": "active-users",
+      "label": "Active Users",
+      "value": 24890,
+      "format": { "kind": "number", "compact": true },
+      "sparkline": {
+        "data": [18200, 19100, 19800, 20400, 21200, 21900, 22600, 23100, 23800, 24200, 24500, 24890],
+        "color": "#16a34a"
+      },
+      "diff": { "value": 8.2, "decimals": 1 }
+    }
+  ]
+}

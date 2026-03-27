@@ -1,0 +1,48 @@
+import type { MiniToolUiExampleClonePayload, MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyQuestionFlowInitialPayload(
+  element: MiniToolUiExamplePayloadTarget,
+  clonePayload: MiniToolUiExampleClonePayload,
+) {
+  const initialQuestionFlowPayload = {
+    id: "question-flow-project-setup",
+    steps: [
+      {
+        id: "language",
+        title: "Select a programming language",
+        description: "This determines which frameworks and tools are available.",
+        options: [
+          { id: "python", label: "Python" },
+          { id: "typescript", label: "TypeScript" },
+          { id: "go", label: "Go" },
+        ],
+      },
+      {
+        id: "framework",
+        title: "Choose a framework",
+        description: "Pick the framework you're most comfortable with.",
+        options: [
+          { id: "fastapi", label: "FastAPI" },
+          { id: "django", label: "Django" },
+          { id: "flask", label: "Flask" },
+        ],
+      },
+      {
+        id: "database",
+        title: "Select your database",
+        description: "Your data will be stored and queried from here.",
+        options: [
+          { id: "postgres", label: "PostgreSQL" },
+          { id: "mysql", label: "MySQL" },
+          { id: "mongodb", label: "MongoDB" },
+        ],
+      },
+    ],
+  };
+
+  element.payload = clonePayload(initialQuestionFlowPayload);
+
+  return {
+    initialQuestionFlowPayload,
+  };
+}

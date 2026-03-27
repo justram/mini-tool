@@ -1,0 +1,16 @@
+{
+  "id": "audio-benchmark-1",
+  "assetId": "asset-audio-benchmark-1",
+  "src": "https://cdn.pixabay.com/audio/2022/03/10/audio_4dedf5bf94.mp3",
+  "title": "Morning Forest",
+  "description": "Dawn chorus recorded in Olympic National Park",
+  "artwork": "https://images.unsplash.com/photo-1448375240586-882707db888b?w=400&auto=format&fit=crop",
+  "durationMs": 42000,
+  "fileSizeBytes": 1248576,
+  "createdAt": "2025-01-01T12:00:00.000Z",
+  "locale": "en-US",
+  "source": {
+    "label": "Nature Archive",
+    "url": "https://example.com/audio/morning-forest"
+  }
+}

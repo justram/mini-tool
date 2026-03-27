@@ -1,0 +1,68 @@
+:host {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --border-color: var(--border);
+
+  display: block;
+  width: 100%;
+  font-family: var(--mt-font-family, ui-sans-serif, system-ui, sans-serif);
+  color: var(--card-fg);
+}
+
+article {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  background: var(--card-bg);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.image {
+  width: 100%;
+  max-height: 16rem;
+  object-fit: cover;
+  display: block;
+}
+
+.content {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+}
+
+.domain-row {
+  color: var(--muted-fg);
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.favicon {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 999px;
+  object-fit: cover;
+  display: inline-block;
+}
+
+.title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.875rem;
+  color: var(--muted-fg);
+  line-height: 1.45;
+}

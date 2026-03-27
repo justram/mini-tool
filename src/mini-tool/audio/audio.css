@@ -1,0 +1,292 @@
+:host {
+  --card-bg: var(--card);
+  --card-fg: var(--card-foreground);
+  --muted-fg: var(--muted-foreground);
+  --muted-bg: var(--muted);
+  --border-color: var(--border);
+
+  display: block;
+  width: 100%;
+  color: var(--card-fg);
+  font-family: var(--mt-font-family, ui-sans-serif, system-ui, sans-serif);
+}
+
+article {
+  width: 100%;
+  box-sizing: border-box;
+  margin-inline: auto;
+}
+
+article.full {
+  width: 100%;
+  min-width: 13rem;
+  max-width: 24rem;
+}
+
+article.compact {
+  width: 100%;
+  min-width: 18rem;
+  max-width: 28rem;
+}
+
+.card {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--border-color);
+  border-radius: 0.8rem;
+  background: var(--card-bg);
+  overflow: hidden;
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 12%, transparent);
+}
+
+.full-artwork {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--muted-bg);
+}
+
+.full-artwork img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.full-content {
+  display: grid;
+  gap: 1.25rem;
+  padding: 1rem;
+}
+
+.meta {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.description {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.25;
+  color: var(--muted-fg);
+}
+
+.controls-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.timeline {
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.scrubber {
+  appearance: none;
+  width: 100%;
+  height: 0.75rem;
+  background: transparent;
+  cursor: pointer;
+  margin: 0;
+}
+
+.scrubber:focus-visible {
+  outline: none;
+}
+
+.scrubber::-webkit-slider-runnable-track {
+  height: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card-fg) 14%, transparent);
+}
+
+.scrubber::-webkit-slider-thumb {
+  appearance: none;
+  margin-top: -0.24rem;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  border: 2px solid var(--card-bg);
+  background: var(--card-fg);
+}
+
+.scrubber::-moz-range-track {
+  height: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card-fg) 14%, transparent);
+}
+
+.scrubber::-moz-range-thumb {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  border: 2px solid var(--card-bg);
+  background: var(--card-fg);
+}
+
+.time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--muted-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.play-toggle {
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: -0.95rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--card-fg);
+  color: var(--card-bg);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-family: inherit;
+}
+
+.play-toggle:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--card-fg) 45%, var(--background));
+  outline-offset: 2px;
+  font-family: inherit;
+}
+
+.play-icon,
+.pause-icon {
+  line-height: 1;
+  font-size: 0.95rem;
+}
+
+.play-icon {
+  transform: translateX(0.06rem);
+}
+
+.compact-root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 4.5rem;
+  padding: 0.75rem;
+}
+
+.compact-glow {
+  position: absolute;
+  pointer-events: none;
+  left: -25%;
+  top: 50%;
+  width: auto;
+  height: 200%;
+  transform: translateY(-50%);
+  object-fit: cover;
+  opacity: 0.35;
+  filter: blur(1.2rem) saturate(1.4);
+}
+
+.compact-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--background) 45%, transparent),
+    color-mix(in oklab, var(--background) 80%, transparent)
+  );
+}
+
+.compact-artwork {
+  position: relative;
+  z-index: var(--mt-layer-content);
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--background) 20%, transparent);
+  box-shadow: 0 6px 18px color-mix(in oklab, var(--foreground) 18%, transparent);
+  flex-shrink: 0;
+}
+
+.compact-artwork img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.compact-content {
+  position: relative;
+  z-index: var(--mt-layer-content);
+  min-width: 0;
+  flex: 1;
+  display: grid;
+  gap: 0.2rem;
+}
+
+.compact-title,
+.compact-description {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.compact-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.compact-description {
+  font-size: 0.78rem;
+  color: var(--muted-fg);
+  line-height: 1.2;
+}
+
+.compact-progress-row {
+  margin-top: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.compact-progress-track {
+  flex: 1;
+  height: 0.35rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--card-fg) 18%, transparent);
+  overflow: hidden;
+}
+
+.compact-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--card-fg);
+}
+
+.compact-time {
+  font-size: 0.74rem;
+  color: var(--muted-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.compact-root .play-toggle {
+  position: relative;
+  z-index: var(--mt-layer-content);
+  margin-top: 0;
+}

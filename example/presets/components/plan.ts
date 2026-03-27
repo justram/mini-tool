@@ -1,0 +1,38 @@
+import type { MiniToolUiExamplePayloadTarget } from "../types.js";
+
+export function applyPlanInitialPayload(element: MiniToolUiExamplePayloadTarget) {
+  element.payload = {
+    id: "plan-comprehensive",
+    title: "Feature Implementation Plan",
+    description: "Step-by-step guide for implementing the new authentication system",
+    todos: [
+      {
+        id: "1",
+        label: "Review existing auth flow",
+        status: "completed",
+        description: "Analyzed current session-based auth and identified pain points",
+      },
+      {
+        id: "2",
+        label: "Design new token structure",
+        status: "completed",
+        description: "Created JWT schema with access/refresh token separation",
+      },
+      {
+        id: "3",
+        label: "Implement JWT middleware",
+        status: "in_progress",
+        description: "Adding token validation and refresh logic to API routes",
+      },
+      { id: "4", label: "Add refresh token logic", status: "pending" },
+      { id: "5", label: "Update user model", status: "pending" },
+      {
+        id: "6",
+        label: "Write integration tests",
+        status: "pending",
+        description: "Cover auth flows, token expiry, and edge cases",
+      },
+    ],
+    maxVisibleTodos: 4,
+  };
+}

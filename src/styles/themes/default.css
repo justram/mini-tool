@@ -1,0 +1,72 @@
+@import "../base.css";
+
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: var(--color-green-500);
+  --chart-2: var(--color-red-500);
+  --chart-3: var(--color-blue-500);
+  --chart-4: var(--color-purple-500);
+  --chart-5: var(--color-yellow-500);
+  --ansi-black: rgb(0 0 0);
+  --ansi-red: rgb(187 0 0);
+  --ansi-green: rgb(0 187 0);
+  --ansi-yellow: rgb(187 187 0);
+  --ansi-blue: rgb(0 0 187);
+  --ansi-magenta: rgb(187 0 187);
+  --ansi-cyan: rgb(0 187 187);
+  --ansi-white: rgb(187 187 187);
+  --ansi-bright-black: rgb(85 85 85);
+  --ansi-bright-red: rgb(255 85 85);
+  --ansi-bright-green: rgb(85 255 85);
+  --ansi-bright-yellow: rgb(255 255 85);
+  --ansi-bright-blue: rgb(85 85 255);
+  --ansi-bright-magenta: rgb(255 85 255);
+  --ansi-bright-cyan: rgb(85 255 255);
+  --ansi-bright-white: rgb(255 255 255);
+  --radius: 0.625rem;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: var(--color-green-400);
+  --chart-2: var(--color-red-400);
+  --chart-3: var(--color-blue-400);
+  --chart-4: var(--color-purple-400);
+  --chart-5: var(--color-yellow-400);
+}

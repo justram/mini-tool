@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>mini-toolui example app</title>
+  </head>
+  <body class="layout-constrained">
+    <header class="fixture-toolbar">
+      <label class="mobile-jump" for="mobile-component-jump">
+        <span class="mobile-jump__label">Jump to</span>
+        <select id="mobile-component-jump" class="mobile-jump__select" aria-label="Jump to component example">
+          <option value="">Select component</option>
+        </select>
+      </label>
+
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-live="polite">
+        <span class="theme-toggle-icon" aria-hidden="true">
+          <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2"></path>
+            <path d="M12 20v2"></path>
+            <path d="m4.93 4.93 1.41 1.41"></path>
+            <path d="m17.66 17.66 1.41 1.41"></path>
+            <path d="M2 12h2"></path>
+            <path d="M20 12h2"></path>
+            <path d="m6.34 17.66-1.41 1.41"></path>
+            <path d="m19.07 4.93-1.41 1.41"></path>
+          </svg>
+          <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a7.2 7.2 0 1 0 9 9 9 9 0 1 1-9-9z"></path>
+          </svg>
+        </span>
+        <span id="theme-toggle-label">Dark mode</span>
+      </button>
+
+      <div class="layout-toggle" role="group" aria-label="Preview width mode">
+        <button id="layout-constrained" class="layout-button" type="button" aria-pressed="true">Constrained</button>
+        <button id="layout-fluid" class="layout-button" type="button" aria-pressed="false">Fluid</button>
+      </div>
+    </header>
+
+    <div class="app-shell">
+      <aside class="component-sidebar" aria-labelledby="component-sidebar-title">
+        <div class="component-sidebar__inner">
+          <p id="component-sidebar-title" class="component-sidebar__eyebrow">Example catalog</p>
+          <h1 class="component-sidebar__title">mini-toolui</h1>
+          <p class="component-sidebar__description">Browse the component gallery and jump directly to any live example.</p>
+          <p id="component-sidebar-count" class="component-sidebar__count"></p>
+          <label class="component-sidebar__search" for="component-sidebar-search">
+            <span class="component-sidebar__search-label">Filter components</span>
+            <input
+              id="component-sidebar-search"
+              class="component-sidebar__search-input"
+              type="search"
+              placeholder="Search components"
+              autocomplete="off"
+              spellcheck="false"
+            />
+          </label>
+          <nav id="component-sidebar-nav" class="component-sidebar__nav" aria-label="Component links"></nav>
+        </div>
+      </aside>
+
+      <main class="content-shell">
+        <section class="app-intro" aria-labelledby="app-intro-title">
+          <p class="app-intro__eyebrow">Component examples</p>
+          <div class="app-intro__header">
+            <div class="app-intro__copy">
+              <h2 id="app-intro-title" class="app-intro__title">A quieter gallery for exploring live mini-tool components</h2>
+              <p class="app-intro__description">
+                Inspect each component in context, switch between preview and generated code inside the card, and use the left rail only for fast navigation.
+              </p>
+            </div>
+            <div class="app-intro__meta">
+              <p id="component-example-count" class="app-intro__stat"></p>
+              <p class="app-intro__meta-copy">Theme and width controls stay in the toolbar so the content area remains focused on the examples.</p>
+            </div>
+          </div>
+        </section>
+
+        <div id="mini-toolui-example-root" class="stack"></div>
+      </main>
+    </div>
+
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

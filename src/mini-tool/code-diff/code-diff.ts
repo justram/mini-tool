@@ -8,6 +8,7 @@ import { renderLucideIcon } from "../../shared/icons/lucide.js";
 import pierreDarkTheme from "../../shared/shiki/pierre-dark-theme.js";
 import pierreLightTheme from "../../shared/shiki/pierre-light-theme.js";
 import { normalizeCodeToTokensResult } from "../../shared/shiki/token-lines.js";
+import { getResolvedDocumentTheme, subscribeToDocumentTheme } from "../../shared/theme/document-theme.js";
 import stylesText from "./code-diff.css?inline";
 import type { SerializableCodeDiff } from "./schema.js";
 
@@ -88,36 +89,6 @@ function rememberLineCache(cacheKey: string, htmlValue: string): void {
   }
 
   highlightedLineCache.set(cacheKey, htmlValue);
-}
-
-function getSystemTheme(): "light" | "dark" {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
-function getDocumentTheme(): "light" | "dark" | null {
-  if (typeof document === "undefined") {
-    return null;
-  }
-
-  const root = document.documentElement;
-  const dataTheme = root.getAttribute("data-theme")?.toLowerCase();
-  if (dataTheme === "light" || dataTheme === "dark") {
-    return dataTheme;
-  }
-
-  if (root.classList.contains("light")) {
-    return "light";
-  }
-
-  if (root.classList.contains("dark")) {
-    return "dark";
-  }
-
-  return null;
 }
 
 function getLanguageDisplayName(language: string): string {
@@ -254,7 +225,10 @@ export class MiniToolCodeDiff extends LitElement {
   private rows: DiffRow[] = [];
 
   @state()
-  private highlightedLines: string[] = [];
+  private highlightedLinesLight: string[] = [];
+
+  @state()
+  private highlightedLinesDark: string[] = [];
 
   @state()
   private additions = 0;
@@ -269,37 +243,25 @@ export class MiniToolCodeDiff extends LitElement {
   private expanded = false;
 
   @state()
-  private resolvedTheme: "light" | "dark" = getDocumentTheme() ?? getSystemTheme();
+  private resolvedTheme: "light" | "dark" = getResolvedDocumentTheme();
 
   static styles = unsafeCSS(stylesText);
 
-  private observer: MutationObserver | null = null;
-  private mediaQuery: MediaQueryList | null = null;
+  private unsubscribeFromTheme: (() => void) | null = null;
   private copyTimeoutHandle: ReturnType<typeof setTimeout> | null = null;
   private renderRequestId = 0;
 
   connectedCallback(): void {
     super.connectedCallback();
 
-    this.syncTheme();
-
-    if (typeof window !== "undefined") {
-      this.mediaQuery = window.matchMedia?.("(prefers-color-scheme: dark)") ?? null;
-      this.mediaQuery?.addEventListener("change", this.handleThemeChange);
-    }
-
-    if (typeof document !== "undefined") {
-      this.observer = new MutationObserver(() => this.syncTheme());
-      this.observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ["class", "data-theme"],
-      });
-    }
+    this.unsubscribeFromTheme = subscribeToDocumentTheme((theme) => {
+      this.resolvedTheme = theme;
+    });
   }
 
   disconnectedCallback(): void {
-    this.mediaQuery?.removeEventListener("change", this.handleThemeChange);
-    this.observer?.disconnect();
+    this.unsubscribeFromTheme?.();
+    this.unsubscribeFromTheme = null;
 
     if (this.copyTimeoutHandle) {
       clearTimeout(this.copyTimeoutHandle);
@@ -322,21 +284,13 @@ export class MiniToolCodeDiff extends LitElement {
   }
 
   protected updated(changed: Map<string, unknown>): void {
-    if (changed.has("payload") || changed.has("resolvedTheme") || changed.has("rows")) {
+    if (changed.has("payload") || changed.has("rows")) {
       void this.highlightRows();
     }
 
     if (changed.has("payload")) {
       this.resetHorizontalScroll();
     }
-  }
-
-  private handleThemeChange = (): void => {
-    this.syncTheme();
-  };
-
-  private syncTheme(): void {
-    this.resolvedTheme = getDocumentTheme() ?? getSystemTheme();
   }
 
   private shouldCollapse(): boolean {
@@ -362,8 +316,7 @@ export class MiniToolCodeDiff extends LitElement {
     return `--collapse-height:${maxHeight}px;`;
   }
 
-  private async renderHighlightedLine(text: string): Promise<string> {
-    const theme = this.resolvedTheme === "dark" ? "pierre-dark" : "pierre-light";
+  private async renderHighlightedLine(text: string, theme: "pierre-light" | "pierre-dark"): Promise<string> {
     const language = this.payload.language;
     const cacheKey = `${theme}::${language}::${text}`;
     const cached = highlightedLineCache.get(cacheKey);
@@ -426,15 +379,23 @@ export class MiniToolCodeDiff extends LitElement {
     }
   }
 
+  private async highlightRowsForTheme(theme: "pierre-light" | "pierre-dark"): Promise<string[]> {
+    return Promise.all(this.rows.map((row) => this.renderHighlightedLine(row.text, theme)));
+  }
+
   private async highlightRows(): Promise<void> {
     const requestId = ++this.renderRequestId;
-    const highlighted = await Promise.all(this.rows.map((row) => this.renderHighlightedLine(row.text)));
+    const [lightLines, darkLines] = await Promise.all([
+      this.highlightRowsForTheme("pierre-light"),
+      this.highlightRowsForTheme("pierre-dark"),
+    ]);
 
     if (requestId !== this.renderRequestId) {
       return;
     }
 
-    this.highlightedLines = highlighted;
+    this.highlightedLinesLight = lightLines;
+    this.highlightedLinesDark = darkLines;
   }
 
   private copyableCode(): string {
@@ -496,13 +457,18 @@ export class MiniToolCodeDiff extends LitElement {
     return renderLucideIcon(ChevronDown, { className: "chevron", size: 16 });
   }
 
+  private get activeHighlightedLines(): string[] {
+    return this.resolvedTheme === "dark" ? this.highlightedLinesDark : this.highlightedLinesLight;
+  }
+
   private renderUnifiedRows() {
     const showLineNumbers = this.payload.lineNumbers === "visible";
+    const highlightedLines = this.activeHighlightedLines;
 
     return html`
       <div class="unified-rows">
         ${this.rows.map((row, index) => {
-          const lineHtml = this.highlightedLines[index] ?? escapeHtml(row.text);
+          const lineHtml = highlightedLines[index] ?? escapeHtml(row.text);
           const marker = row.kind === "add" ? "+" : row.kind === "del" ? "-" : "";
 
           return html`
@@ -553,6 +519,7 @@ export class MiniToolCodeDiff extends LitElement {
   private renderSplitRows() {
     const splitRows = buildSplitRows(this.rows);
     const rowIndexMap = new Map(this.rows.map((row, index) => [row, index]));
+    const highlightedLines = this.activeHighlightedLines;
 
     const leftRows = splitRows.map((row) => {
       if (row.kind === "meta") {
@@ -560,7 +527,7 @@ export class MiniToolCodeDiff extends LitElement {
       }
 
       const leftIndex = row.left ? (rowIndexMap.get(row.left) ?? -1) : -1;
-      const leftHtml = leftIndex >= 0 ? (this.highlightedLines[leftIndex] ?? null) : null;
+      const leftHtml = leftIndex >= 0 ? (highlightedLines[leftIndex] ?? null) : null;
       return this.renderSplitPaneRow(row.left, leftHtml, "left");
     });
 
@@ -570,7 +537,7 @@ export class MiniToolCodeDiff extends LitElement {
       }
 
       const rightIndex = row.right ? (rowIndexMap.get(row.right) ?? -1) : -1;
-      const rightHtml = rightIndex >= 0 ? (this.highlightedLines[rightIndex] ?? null) : null;
+      const rightHtml = rightIndex >= 0 ? (highlightedLines[rightIndex] ?? null) : null;
       return this.renderSplitPaneRow(row.right, rightHtml, "right");
     });
 

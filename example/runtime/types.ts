@@ -30,11 +30,18 @@ export type MiniToolUiExampleHarnessRuntime = {
   getCardByElementId: (elementId: MiniToolUiExampleElementId) => MiniToolUiExampleHarnessCard | undefined;
   getComponentElement: (elementId: MiniToolUiExampleElementId) => MiniToolUiExampleComponentElement | undefined;
   getCodeRenderer: (elementId: MiniToolUiExampleElementId) => MiniToolUiExampleCodeRendererElement | undefined;
+  ensurePreviewMounted: (elementId: MiniToolUiExampleElementId) => void;
+  ensureCodeRenderer: (elementId: MiniToolUiExampleElementId) => MiniToolUiExampleCodeRendererElement | undefined;
   setCardDisplayMode: (elementId: MiniToolUiExampleElementId, mode: MiniToolUiExampleMode) => void;
   setAllCardsDisplayMode: (mode: MiniToolUiExampleMode) => void;
 };
 
 export type RefreshCardCode = (elementId: MiniToolUiExampleElementId) => void;
+
+export type MiniToolUiExampleModeChangeEventDetail = {
+  elementId: MiniToolUiExampleElementId;
+  mode: MiniToolUiExampleMode;
+};
 
 export type MiniToolUiExampleResetContext = {
   approvalCardResetButton: HTMLButtonElement;

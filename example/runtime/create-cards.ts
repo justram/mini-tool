@@ -9,6 +9,7 @@ import type {
   MiniToolUiExampleComponentElement,
   MiniToolUiExampleHarnessRuntime,
   MiniToolUiExampleMode,
+  MiniToolUiExampleModeChangeEventDetail,
 } from "./types.js";
 
 function formatCardTitle(card: MiniToolUiExampleHarnessCard): string {
@@ -37,8 +38,120 @@ export function createMiniToolUiExampleHarnessCards(
   const codePanelsByElementId = new Map<MiniToolUiExampleElementId, HTMLDivElement>();
   const previewTabsByElementId = new Map<MiniToolUiExampleElementId, HTMLButtonElement>();
   const codeTabsByElementId = new Map<MiniToolUiExampleElementId, HTMLButtonElement>();
+  const cardSectionsByElementId = new Map<MiniToolUiExampleElementId, HTMLElement>();
+  const previewMountedByElementId = new Map<MiniToolUiExampleElementId, boolean>();
+  const previewVisibleByElementId = new Map<MiniToolUiExampleElementId, boolean>();
+  const displayModeByElementId = new Map<MiniToolUiExampleElementId, MiniToolUiExampleMode>();
+
+  function setPreviewPlaceholderHeight(elementId: MiniToolUiExampleElementId, measuredHeight: number): void {
+    const previewPanel = previewPanelsByElementId.get(elementId);
+    if (!previewPanel || measuredHeight <= 0) {
+      return;
+    }
+
+    previewPanel.style.setProperty("--preview-placeholder-height", `${measuredHeight}px`);
+  }
+
+  function capturePreviewPlaceholderHeightNextFrame(elementId: MiniToolUiExampleElementId): void {
+    const previewPanel = previewPanelsByElementId.get(elementId);
+    if (!previewPanel) {
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      const measuredHeight = Math.ceil(previewPanel.getBoundingClientRect().height);
+      setPreviewPlaceholderHeight(elementId, measuredHeight);
+    });
+  }
+
+  function mountPreview(elementId: MiniToolUiExampleElementId): void {
+    if (previewMountedByElementId.get(elementId) === true) {
+      return;
+    }
+
+    const previewPanel = previewPanelsByElementId.get(elementId);
+    const componentElement = componentElements.get(elementId);
+    if (!previewPanel || !componentElement) {
+      return;
+    }
+
+    previewPanel.appendChild(componentElement);
+    previewPanel.dataset.mounted = "true";
+    previewMountedByElementId.set(elementId, true);
+    capturePreviewPlaceholderHeightNextFrame(elementId);
+  }
+
+  function unmountPreview(elementId: MiniToolUiExampleElementId): void {
+    if (previewMountedByElementId.get(elementId) !== true) {
+      return;
+    }
+
+    const previewPanel = previewPanelsByElementId.get(elementId);
+    const componentElement = componentElements.get(elementId);
+    if (!previewPanel || !componentElement) {
+      return;
+    }
+
+    setPreviewPlaceholderHeight(elementId, Math.ceil(previewPanel.getBoundingClientRect().height));
+    if (componentElement.parentElement === previewPanel) {
+      previewPanel.removeChild(componentElement);
+    }
+
+    previewPanel.dataset.mounted = "false";
+    previewMountedByElementId.set(elementId, false);
+  }
+
+  function reconcilePreviewMount(elementId: MiniToolUiExampleElementId, forceMount = false): void {
+    const mode = displayModeByElementId.get(elementId) ?? "preview";
+    if (mode !== "preview") {
+      unmountPreview(elementId);
+      return;
+    }
+
+    const isVisible = previewVisibleByElementId.get(elementId) === true;
+    if (forceMount || isVisible) {
+      mountPreview(elementId);
+      return;
+    }
+
+    unmountPreview(elementId);
+  }
+
+  function ensurePreviewMounted(elementId: MiniToolUiExampleElementId): void {
+    previewVisibleByElementId.set(elementId, true);
+    mountPreview(elementId);
+  }
+
+  function ensureCodeRenderer(elementId: MiniToolUiExampleElementId): MiniToolUiExampleCodeRendererElement | undefined {
+    const existingRenderer = codeRenderersByElementId.get(elementId);
+    if (existingRenderer) {
+      return existingRenderer;
+    }
+
+    const codePanel = codePanelsByElementId.get(elementId);
+    if (!codePanel) {
+      return undefined;
+    }
+
+    const codeRenderer = document.createElement("mini-tool-code-block") as MiniToolUiExampleCodeRendererElement;
+    codeRenderer.className = "card-code-renderer";
+    codePanel.appendChild(codeRenderer);
+    codeRenderersByElementId.set(elementId, codeRenderer);
+    return codeRenderer;
+  }
+
+  function notifyModeChange(elementId: MiniToolUiExampleElementId, mode: MiniToolUiExampleMode): void {
+    document.dispatchEvent(
+      new CustomEvent<MiniToolUiExampleModeChangeEventDetail>("mini-toolui:card-mode-change", {
+        detail: { elementId, mode },
+      }),
+    );
+  }
 
   function setCardDisplayMode(elementId: MiniToolUiExampleElementId, mode: MiniToolUiExampleMode): void {
+    const previousMode = displayModeByElementId.get(elementId) ?? "preview";
+    displayModeByElementId.set(elementId, mode);
+
     const previewPanel = previewPanelsByElementId.get(elementId);
     const codePanel = codePanelsByElementId.get(elementId);
     const previewTab = previewTabsByElementId.get(elementId);
@@ -51,6 +164,13 @@ export function createMiniToolUiExampleHarnessCards(
     const showPreview = mode !== "code";
     const showCode = mode !== "preview";
 
+    if (showCode) {
+      ensureCodeRenderer(elementId);
+      unmountPreview(elementId);
+    } else {
+      reconcilePreviewMount(elementId, previousMode === "code");
+    }
+
     previewPanel.hidden = !showPreview;
     codePanel.hidden = !showCode;
 
@@ -60,6 +180,8 @@ export function createMiniToolUiExampleHarnessCards(
     codeTab.setAttribute("aria-selected", String(codeActive));
     previewTab.dataset.active = String(previewActive);
     codeTab.dataset.active = String(codeActive);
+
+    notifyModeChange(elementId, mode);
   }
 
   for (const card of cards) {
@@ -69,6 +191,10 @@ export function createMiniToolUiExampleHarnessCards(
     section.id = `${elementId}-card`;
     section.className = "card";
     section.dataset.testid = card.testId;
+    cardSectionsByElementId.set(elementId, section);
+    previewMountedByElementId.set(elementId, false);
+    previewVisibleByElementId.set(elementId, false);
+    displayModeByElementId.set(elementId, "preview");
 
     const heading = document.createElement("div");
     heading.className = "card-header";
@@ -110,7 +236,7 @@ export function createMiniToolUiExampleHarnessCards(
 
     const componentPreview = document.createElement("div");
     componentPreview.className = "card-preview";
-    componentPreview.appendChild(componentElement);
+    componentPreview.dataset.mounted = "false";
     section.appendChild(componentPreview);
 
     componentElements.set(elementId, componentElement);
@@ -122,12 +248,7 @@ export function createMiniToolUiExampleHarnessCards(
     const codeView = document.createElement("div");
     codeView.className = "card-code-view";
 
-    const codeRenderer = document.createElement("mini-tool-code-block") as MiniToolUiExampleCodeRendererElement;
-    codeRenderer.className = "card-code-renderer";
-
-    codeView.append(codeRenderer);
     section.appendChild(codeView);
-    codeRenderersByElementId.set(elementId, codeRenderer);
     codePanelsByElementId.set(elementId, codeView);
 
     previewTab.addEventListener("click", () => {
@@ -194,6 +315,45 @@ export function createMiniToolUiExampleHarnessCards(
     return element;
   }
 
+  if (typeof IntersectionObserver === "function") {
+    const previewObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const elementId = entry.target instanceof HTMLElement ? entry.target.id.replace(/-card$/, "") : "";
+          const typedElementId = elementId as MiniToolUiExampleElementId;
+          if (!cardByElementId.has(typedElementId)) {
+            continue;
+          }
+
+          previewVisibleByElementId.set(typedElementId, entry.isIntersecting);
+          reconcilePreviewMount(typedElementId);
+        }
+      },
+      {
+        root: null,
+        rootMargin: "800px 0px",
+      },
+    );
+
+    for (const card of cards) {
+      const elementId = card.elementId as MiniToolUiExampleElementId;
+      const section = cardSectionsByElementId.get(elementId);
+      if (section) {
+        previewObserver.observe(section);
+      }
+    }
+  } else {
+    for (const card of cards) {
+      mountPreview(card.elementId as MiniToolUiExampleElementId);
+    }
+  }
+
+  for (const card of cards.slice(0, 4)) {
+    const elementId = card.elementId as MiniToolUiExampleElementId;
+    previewVisibleByElementId.set(elementId, true);
+    mountPreview(elementId);
+  }
+
   function setAllCardsDisplayMode(mode: MiniToolUiExampleMode): void {
     for (const card of cards) {
       setCardDisplayMode(card.elementId as MiniToolUiExampleElementId, mode);
@@ -207,6 +367,8 @@ export function createMiniToolUiExampleHarnessCards(
     getCardByElementId: (elementId) => cardByElementId.get(elementId),
     getComponentElement: (elementId) => componentElements.get(elementId),
     getCodeRenderer: (elementId) => codeRenderersByElementId.get(elementId),
+    ensurePreviewMounted,
+    ensureCodeRenderer,
     setCardDisplayMode,
     setAllCardsDisplayMode,
   };

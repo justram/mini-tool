@@ -1,6 +1,10 @@
 import { buildMiniToolUiExampleSnippetKey, renderMiniToolUiExampleSnippet } from "../code-snippets.js";
 import type { MiniToolUiExampleHarnessCard } from "../harness-config.js";
-import type { MiniToolUiExampleHarnessRuntime, RefreshCardCode } from "./types.js";
+import type {
+  MiniToolUiExampleHarnessRuntime,
+  MiniToolUiExampleModeChangeEventDetail,
+  RefreshCardCode,
+} from "./types.js";
 
 export function createCodeViewSync(
   cards: readonly MiniToolUiExampleHarnessCard[],
@@ -43,6 +47,17 @@ export function createCodeViewSync(
       refreshCardCode(card.elementId as Parameters<RefreshCardCode>[0]);
     }
   };
+
+  document.addEventListener("mini-toolui:card-mode-change", (event) => {
+    const customEvent = event as CustomEvent<MiniToolUiExampleModeChangeEventDetail>;
+    const detail = customEvent.detail;
+    if (!detail || detail.mode !== "code") {
+      return;
+    }
+
+    harness.ensureCodeRenderer(detail.elementId);
+    refreshCardCode(detail.elementId);
+  });
 
   return {
     refreshCardCode,

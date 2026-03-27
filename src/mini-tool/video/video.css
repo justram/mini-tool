@@ -13,7 +13,8 @@
   color: var(--card-fg);
 }
 
-:host-context(.dark) {
+:host-context(.dark),
+:host-context([data-theme="dark"]) {
   --overlay-title-color: var(--foreground);
   --media-bg: color-mix(in oklab, var(--background) 88%, var(--foreground));
 }

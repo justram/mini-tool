@@ -21,7 +21,9 @@
   z-index: -1;
 }
 
-[data-theme-transition].dark::view-transition-new(root) {
+[data-theme-transition].dark::view-transition-new(root),
+[data-theme-transition][data-theme="dark"]::view-transition-new(root),
+[data-theme-transition][data-theme-transition-mode="dark"]::view-transition-new(root) {
   z-index: 1;
 }
 

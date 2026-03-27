@@ -3,6 +3,7 @@ import leafletStylesText from "leaflet/dist/leaflet.css?inline";
 import { html, LitElement, nothing, unsafeCSS } from "lit";
 import { customElement, property, state } from "lit/decorators.js";
 import Supercluster from "supercluster";
+import { getResolvedDocumentTheme, subscribeToDocumentTheme } from "../../shared/theme/document-theme.js";
 import localStylesText from "./geo-map.css?inline";
 import type { GeoMapMarker, GeoMapRoute, SerializableGeoMap } from "./schema.js";
 
@@ -25,40 +26,6 @@ function escapeHtml(value: string): string {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
-}
-
-function getSystemTheme(): "light" | "dark" {
-  if (typeof window === "undefined") {
-    return "light";
-  }
-
-  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
-function getDocumentTheme(): "light" | "dark" | null {
-  if (typeof document === "undefined") {
-    return null;
-  }
-
-  const root = document.documentElement;
-  const dataTheme = root.getAttribute("data-theme")?.toLowerCase();
-  if (dataTheme === "dark") {
-    return "dark";
-  }
-
-  if (dataTheme === "light") {
-    return "light";
-  }
-
-  if (root.classList.contains("dark")) {
-    return "dark";
-  }
-
-  if (root.classList.contains("light")) {
-    return "light";
-  }
-
-  return null;
 }
 
 function mapAriaLabel(title?: string, description?: string): string {
@@ -117,7 +84,7 @@ export class MiniToolGeoMap extends LitElement {
   private currentZoom = 2;
 
   @state()
-  private inheritedTheme: "light" | "dark" = getDocumentTheme() ?? getSystemTheme();
+  private inheritedTheme: "light" | "dark" = getResolvedDocumentTheme();
 
   static styles = [unsafeCSS(leafletStylesText), unsafeCSS(localStylesText)];
 
@@ -141,9 +108,7 @@ export class MiniToolGeoMap extends LitElement {
 
   private clusterActionById = new Map<number, () => void>();
 
-  private themeObserver: MutationObserver | null = null;
-
-  private themeMediaQuery: MediaQueryList | null = null;
+  private unsubscribeFromTheme: (() => void) | null = null;
 
   connectedCallback(): void {
     super.connectedCallback();
@@ -154,7 +119,8 @@ export class MiniToolGeoMap extends LitElement {
     window.removeEventListener("keydown", this.onWindowKeyDown);
     this.renderRoot.removeEventListener("click", this.onSurfaceClick);
     this.renderRoot.removeEventListener("keydown", this.onSurfaceKeyDown);
-    this.stopThemeObservers();
+    this.unsubscribeFromTheme?.();
+    this.unsubscribeFromTheme = null;
     this.destroyMap();
     super.disconnectedCallback();
   }
@@ -162,7 +128,10 @@ export class MiniToolGeoMap extends LitElement {
   firstUpdated(): void {
     this.renderRoot.addEventListener("click", this.onSurfaceClick);
     this.renderRoot.addEventListener("keydown", this.onSurfaceKeyDown);
-    this.startThemeObservers();
+    this.unsubscribeFromTheme = subscribeToDocumentTheme((theme) => {
+      this.inheritedTheme = theme;
+      this.updateTileTheme();
+    });
     void this.initializeMap();
   }
 
@@ -197,35 +166,6 @@ export class MiniToolGeoMap extends LitElement {
   private get resolvedTheme(): "light" | "dark" {
     return this.payload?.theme ?? this.inheritedTheme;
   }
-
-  private startThemeObservers(): void {
-    if (typeof window === "undefined" || typeof document === "undefined") {
-      return;
-    }
-
-    this.themeMediaQuery = window.matchMedia?.("(prefers-color-scheme: dark)") ?? null;
-    this.themeMediaQuery?.addEventListener("change", this.updateThemeFromEnvironment);
-
-    this.themeObserver = new MutationObserver(this.updateThemeFromEnvironment);
-    this.themeObserver.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class", "data-theme"],
-    });
-
-    this.updateThemeFromEnvironment();
-  }
-
-  private stopThemeObservers(): void {
-    this.themeMediaQuery?.removeEventListener("change", this.updateThemeFromEnvironment);
-    this.themeObserver?.disconnect();
-    this.themeObserver = null;
-    this.themeMediaQuery = null;
-  }
-
-  private readonly updateThemeFromEnvironment = (): void => {
-    this.inheritedTheme = getDocumentTheme() ?? getSystemTheme();
-    this.updateTileTheme();
-  };
 
   private get tileUrl(): string {
     return this.resolvedTheme === "dark" ? DARK_TILE_URL : LIGHT_TILE_URL;

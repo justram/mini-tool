@@ -136,6 +136,8 @@ function scrollContentToCard(
   updateHash = true,
   keepVisible = true,
 ) {
+  harness.ensurePreviewMounted(elementId);
+
   const targetCard = document.getElementById(`${elementId}-card`);
   if (!(targetCard instanceof HTMLElement)) {
     return;
@@ -385,7 +387,7 @@ const preferencesPanelReceipt = harness.mustGetReceipt("preferences-panel-receip
 const itemCarouselReceipt = harness.mustGetReceipt("item-carousel-receipt");
 const questionFlowReceipt = harness.mustGetReceipt("question-flow-receipt");
 
-const { refreshCardCode, refreshAllCardCode } = createCodeViewSync(MINI_TOOLUI_EXAMPLE_HARNESS_CARDS, harness);
+const { refreshCardCode } = createCodeViewSync(MINI_TOOLUI_EXAMPLE_HARNESS_CARDS, harness);
 
 const themeToggle = document.querySelector("#theme-toggle");
 const themeToggleLabel = document.querySelector("#theme-toggle-label");
@@ -409,7 +411,7 @@ applyTheme(initialTheme, themeElements);
 
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
-    const isCurrentlyDark = document.documentElement.classList.contains("dark");
+    const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
     const nextTheme = isCurrentlyDark ? "light" : "dark";
     window.localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
     changeThemeWithTransition(nextTheme, themeElements);
@@ -521,8 +523,6 @@ const {
   initialPreferencesPanelPayload,
   initialQuestionFlowPayload,
 } = applyInitialPayloads(harness.mustGetComponentElement, clonePayload);
-
-refreshAllCardCode();
 
 const unbindMiniToolActions = bindMiniToolUiExampleActions({
   optionListElement,

@@ -257,28 +257,34 @@
   cursor: not-allowed;
 }
 
-:host-context(.dark) .surface {
+:host-context(.dark) .surface,
+:host-context([data-theme="dark"]) .surface {
   border-color: color-mix(in oklab, var(--foreground) 12%, transparent);
   background: color-mix(in oklab, var(--background) 92%, var(--foreground) 8%);
 }
 
-:host-context(.dark) .track-shell {
+:host-context(.dark) .track-shell,
+:host-context([data-theme="dark"]) .track-shell {
   border-color: color-mix(in oklab, var(--foreground) 18%, transparent);
   background: color-mix(in oklab, var(--background) 84%, var(--foreground) 16%);
 }
 
-:host-context(.dark) .tick {
+:host-context(.dark) .tick,
+:host-context([data-theme="dark"]) .tick {
   background: color-mix(in oklab, var(--foreground) 16%, transparent);
 }
 
-:host-context(.dark) .tick.edge {
+:host-context(.dark) .tick.edge,
+:host-context([data-theme="dark"]) .tick.edge {
   background: transparent;
 }
 
-:host-context(.dark) .track-fill {
+:host-context(.dark) .track-fill,
+:host-context([data-theme="dark"]) .track-fill {
   background: var(--slider-fill-dark, var(--slider-fill-light));
 }
 
-:host-context(.dark) .value-marker {
+:host-context(.dark) .value-marker,
+:host-context([data-theme="dark"]) .value-marker {
   background: var(--slider-handle-dark, var(--slider-handle-light));
 }

@@ -128,11 +128,13 @@
     background-color 150ms ease;
 }
 
-:host-context(.dark) .mt-control-switch-input {
+:host-context(.dark) .mt-control-switch-input,
+:host-context([data-theme="dark"]) .mt-control-switch-input {
   background: color-mix(in srgb, var(--input) 80%, transparent);
 }
 
-:host-context(.dark) .mt-control-switch-thumb {
+:host-context(.dark) .mt-control-switch-thumb,
+:host-context([data-theme="dark"]) .mt-control-switch-thumb {
   background: var(--foreground);
 }
 
@@ -146,6 +148,7 @@
   );
 }
 
-:host-context(.dark) .mt-control-switch-input:checked + .mt-control-switch-thumb {
+:host-context(.dark) .mt-control-switch-input:checked + .mt-control-switch-thumb,
+:host-context([data-theme="dark"]) .mt-control-switch-input:checked + .mt-control-switch-thumb {
   background: var(--primary-foreground);
 }

@@ -1,7 +1,7 @@
 {
   "name": "mini-toolui",
   "version": "0.1.0",
-  "description": "Lit-based mini tool components for host applications.",
+  "description": "Experimental repository for a Lit-based toolchain for agent tool UI.",
   "keywords": [
     "lit",
     "mini-tool",

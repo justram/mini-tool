@@ -1,10 +1,24 @@
+<div align="center">
+
 # mini-tool
 
-Lit-based mini tool components for host applications.
+Experimental Lit-based toolchain for agent tool UI
+
+[![License](https://img.shields.io/badge/license-MIT-111111?style=flat-square)](./LICENSE)
+[![Pi package](https://img.shields.io/badge/pi-package-111111?style=flat-square)](https://pi.dev)
+
+Tool UI primitives,
+runtimes, and workflows
+
+for agents.
+
+</div>
+
+`mini-tool` is an experimental repository for a Lit-based toolchain for agent tool UI, focused on reusable components, action/runtime integration, and validation workflows for agent-facing tool surfaces.
 
 ## Consumer API
 
-This package publishes a stable, consumer-focused surface for:
+This repository publishes an experimental, consumer-usable surface for:
 
 - shared mini-tool styles
 - component registration via subpath exports
@@ -119,3 +133,11 @@ Script conventions:
 - `verify` = all-up validation before release
 
 For benchmark internals and schema adapter details (including native source Zod adapter behavior), see `docs/testing-and-benchmarks.md`.
+
+## Contact
+
+Jheng-Hong (Matt) YANG: jhyang@stencilzeit.com
+
+## License
+
+MIT

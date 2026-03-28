@@ -319,25 +319,23 @@ body {
 
 :root[data-theme-animating] {
   transition:
-    --background var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --card var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --card-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --popover var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --popover-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --primary var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --primary-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --secondary var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --secondary-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --muted var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --muted-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --accent var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --accent-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --destructive var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --destructive-foreground var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --border var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --input var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1),
-    --ring var(--theme-skin-transition-duration, 620ms) cubic-bezier(0.22, 1, 0.36, 1);
+    --background var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --card var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --card-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --popover var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --popover-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --primary var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --primary-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --secondary var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --secondary-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --muted var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --muted-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --accent var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --accent-foreground var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --border var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --input var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1),
+    --ring var(--theme-skin-transition-duration, 760ms) cubic-bezier(0.18, 1, 0.3, 1);
 }
 
 .theme-transition-overlay {
@@ -345,7 +343,7 @@ body {
   --theme-transition-origin-y: 24px;
   --theme-transition-overlay-color: var(--background);
   --theme-transition-overlay-contrast-color: var(--foreground);
-  --theme-transition-duration: 620ms;
+  --theme-transition-duration: 760ms;
 
   position: fixed;
   inset: 0;
@@ -358,73 +356,80 @@ body {
 .theme-transition-overlay::after {
   content: "";
   position: absolute;
-  inset: -24vmax;
+  inset: -28vmax;
   transform-origin: var(--theme-transition-origin-x) var(--theme-transition-origin-y);
   will-change: transform, opacity;
 }
 
 .theme-transition-overlay::before {
   background: radial-gradient(
-    circle 8rem at var(--theme-transition-origin-x) var(--theme-transition-origin-y),
-    color-mix(in oklab, var(--theme-transition-overlay-color) 20%, transparent) 0%,
-    color-mix(in oklab, var(--theme-transition-overlay-color) 12%, transparent) 20%,
-    color-mix(in oklab, var(--theme-transition-overlay-color) 6%, transparent) 38%,
-    transparent 72%
+    circle 10rem at var(--theme-transition-origin-x) var(--theme-transition-origin-y),
+    color-mix(in oklab, var(--theme-transition-overlay-color) 10%, transparent) 0%,
+    color-mix(in oklab, var(--theme-transition-overlay-color) 6%, transparent) 28%,
+    color-mix(in oklab, var(--theme-transition-overlay-color) 2%, transparent) 46%,
+    transparent 78%
   );
   opacity: 0;
-  transform: scale(0.55);
+  transform: scale(0.7);
+  filter: blur(18px);
 }
 
 .theme-transition-overlay::after {
   background: radial-gradient(
-    circle 7rem at var(--theme-transition-origin-x) var(--theme-transition-origin-y),
-    color-mix(in oklab, var(--theme-transition-overlay-contrast-color) 10%, transparent) 0%,
-    color-mix(in oklab, var(--theme-transition-overlay-contrast-color) 6%, transparent) 16%,
-    transparent 66%
+    circle 8.5rem at var(--theme-transition-origin-x) var(--theme-transition-origin-y),
+    color-mix(in oklab, var(--theme-transition-overlay-contrast-color) 4%, transparent) 0%,
+    color-mix(in oklab, var(--theme-transition-overlay-contrast-color) 2%, transparent) 20%,
+    transparent 72%
   );
   opacity: 0;
-  transform: scale(0.6);
+  transform: scale(0.78);
+  filter: blur(20px);
 }
 
 .theme-transition-overlay.is-running::before {
-  animation: example-theme-fog var(--theme-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: example-theme-fog var(--theme-transition-duration) cubic-bezier(0.18, 1, 0.3, 1) forwards;
 }
 
 .theme-transition-overlay.is-running::after {
-  animation: example-theme-ring var(--theme-transition-duration) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: example-theme-ring var(--theme-transition-duration) cubic-bezier(0.18, 1, 0.3, 1) forwards;
 }
 
 @keyframes example-theme-fog {
   0% {
     opacity: 0.06;
-    transform: scale(0.55);
+    transform: scale(0.7);
   }
 
-  24% {
-    opacity: 0.22;
-    transform: scale(1.02);
+  20% {
+    opacity: 0.13;
+    transform: scale(0.95);
+  }
+
+  60% {
+    opacity: 0.08;
+    transform: scale(1.48);
   }
 
   100% {
     opacity: 0;
-    transform: scale(2.25);
+    transform: scale(2.45);
   }
 }
 
 @keyframes example-theme-ring {
   0% {
-    opacity: 0.04;
-    transform: scale(0.6);
+    opacity: 0.015;
+    transform: scale(0.78);
   }
 
-  28% {
-    opacity: 0.14;
-    transform: scale(1.04);
+  24% {
+    opacity: 0.045;
+    transform: scale(1.02);
   }
 
   100% {
     opacity: 0;
-    transform: scale(2.05);
+    transform: scale(2.18);
   }
 }
 

@@ -5,7 +5,7 @@ type MiniToolUiExampleThemeToggleElements = {
   label?: Element | null;
 };
 
-const THEME_TRANSITION_DURATION_MS = 620;
+const THEME_TRANSITION_DURATION_MS = 760;
 
 const TRANSITIONABLE_THEME_COLOR_PROPERTIES = [
   ["--background", "oklch(1 0 0)"],
@@ -22,8 +22,6 @@ const TRANSITIONABLE_THEME_COLOR_PROPERTIES = [
   ["--muted-foreground", "oklch(0.556 0 0)"],
   ["--accent", "oklch(0.97 0 0)"],
   ["--accent-foreground", "oklch(0.205 0 0)"],
-  ["--destructive", "oklch(0.577 0.245 27.325)"],
-  ["--destructive-foreground", "oklch(0.577 0.245 27.325)"],
   ["--border", "oklch(0.922 0 0)"],
   ["--input", "oklch(0.922 0 0)"],
   ["--ring", "oklch(0.708 0 0)"],
@@ -194,7 +192,9 @@ export function applyTheme(
 }
 
 function removeExistingThemeTransitionOverlay(): void {
-  document.documentElement.removeAttribute("data-theme-animating");
+  const root = document.documentElement;
+  root.removeAttribute("data-theme-animating");
+  root.style.removeProperty("--theme-skin-transition-duration");
   document.querySelector(".theme-transition-overlay")?.remove();
 }
 
@@ -242,6 +242,7 @@ export function changeThemeWithTransition(
 
   const root = document.documentElement;
   root.setAttribute("data-theme-animating", "");
+  root.style.setProperty("--theme-skin-transition-duration", `${THEME_TRANSITION_DURATION_MS}ms`);
 
   const overlay = appendThemeTransitionOverlay(theme, elements.button ?? null);
   applyTheme(theme, elements);
@@ -254,6 +255,7 @@ export function changeThemeWithTransition(
 
     cleanedUp = true;
     root.removeAttribute("data-theme-animating");
+    root.style.removeProperty("--theme-skin-transition-duration");
     overlay.remove();
   };
 
